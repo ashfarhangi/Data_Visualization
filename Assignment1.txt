@@ -1,0 +1,21 @@
+df <- read.csv("data/cereal.csv")
+library(ggplot2)
+
+#removing negative to 1
+df[df<0] <- 1
+
+ggplot(data=df,aes(x=Display.Shelf,y=Calories/Cups.per.Serving))+ggtitle("Violing: Calories/Cup by shelf")+geom_violin()
+
+#HISTOGRAM
+h=ggplot(data=df,aes(x=Calories/Cups.per.Serving))+ggtitle("Histogram: Calories/Cup by shelf")+geom_histogram()
+h+facet_wrap(~Display.Shelf,nrow=1)+ggtitle('Histogram Facet by shelf') + scale_fill_gradient(low="blue")
+h+facet_wrap(~Display.Shelf,nrow=1)+ggtitle('Histogram Facet by shelf')
+h<-ggplot(data=df,aes(x=Calories/Cups.per.Serving))+ggtitle("Histogram: Calories/Cup by shelf")+geom_histogram(colour='black',fill="blue")
+#VIOLING
+v<-ggplot(data=df,aes(x=Display.Shelf,y=Calories/Cups.per.Serving))+ggtitle("Violin: Calories/Cup by shelf")+geom_violin()
+v+facet_wrap(h)
+v+facet_wrap(~h,nrow=2)
+
+
+v+facet_wrap(~Display.Shelf,nrow=1)+ggtitle('Violin Facet by shelf')
+
