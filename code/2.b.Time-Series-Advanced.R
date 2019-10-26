@@ -1,0 +1,36 @@
+#route 2
+library(readxl)
+library(ggplot2)
+# Please replace the data with the your current folder
+gdppc_cppp_by_gapminder <- read_excel("GitHub/Data_Visualization/data/gdppc_cppp-by-gapminder.xlsx", sheet = "countries_and_territories")
+df <- gdppc_cppp_by_gapminder
+
+df1<-df %>% 
+  filter(geo=="usa" | geo=="chn" | geo =="irn" |geo == "rus")
+df2 <- subset(df1, select = -c(indicator.name, geo,indicator))
+colnames(df2) -> year
+year <- as.integer(year)
+year <- year[2:242]
+df3 <-t(df2)
+df3
+
+colnames(df3) = df3[1,]
+df3 <- as.data.frame(df3)
+df3 <- df3[-1,]
+df3 %>% 
+  ggplot(aes(x=year, y=China, colour = 'red')) +geom_line()+geom_point() +annotate("text",x = as.integer(df3[240,1]),y= as.integer(df3[240,2]) ,label="O",color='red',size=10)
+
+df3 %>% 
+  ggplot(aes(x=year,y=Iran, colour = "blue",size=4))+geom_line() +annotate("text",x = as.integer(df3[240,1]),y= as.integer(df3[240,3]) ,label="O",color='Blue',size=10)
+df3 %>% 
+  ggplot(aes(x=year, y=`United States`, colour = 'red')) +geom_line()+geom_point() +annotate("text",x = as.integer(df3[240,1]),y= as.integer(df3[240,5]) ,label="O",color='Black',size=10)
+
+df3 %>% 
+  ggplot(aes(x=year,y=Russia, colour = "black"))+geom_line()+geom_point() +annotate("text",x = as.integer(df3[240,1]),y= as.integer(df3[240,4]) ,label="O",color='Green',size=10)
+library(tidyr)
+#Long to wide
+df3Wide<-df3 %>% 
+  gather(China,year)
+
+df3[240,1]
+
